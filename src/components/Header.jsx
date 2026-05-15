@@ -15,6 +15,7 @@ export const Header = () => {
 
     const closeDrawer = () => {
         setToggle(false);};
+
     const Links = [ {
             icon: <IoSearch />,
             name: "Search"
