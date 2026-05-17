@@ -2,160 +2,93 @@ import { useState } from "react";
 import { FaArrowRight } from "react-icons/fa6";
 import { FaArrowLeft } from "react-icons/fa6";
 import { TbStar } from "react-icons/tb";
-import { TopRestourent } from "./TopRestourent";
+// import { TopRestourent } from "./TopRestourent";
 
 export const OnYourMindSection = () => {
     const [sliding, setSliding] = useState(0);
 
-    const [slider, setSlider] = useState([
-        {
-            thumbnail: '/img/On Your Mind/2.jpg',
-            price: '40% off above Rs: 500',
-            title: 'Pizza',
-            rating: <><TbStar className="bg-green-400 rounded-full text-white mt-1" />   4.1 25-30 mins</>,
-            more: 'Italian: Pizza Pasta Lasagna'
-        },
-        {
-            thumbnail: '/img/On Your Mind/3.jpg',
-            price: '40% off above Rs: 300',
-            title: 'Tandori Roti',
-            rating: <><TbStar className="bg-green-400 rounded-full text-white mt-1" />   4.1 25-30 mins</>,
-            more: 'Pakistani, Afgani, Many More..'
-        },
-        {
-            thumbnail: '/img/On Your Mind/4.jpg',
-            price: '40% off above Rs: 300', title: 'Tea Bread',
-            rating: <><TbStar className="bg-green-400 rounded-full text-white mt-1" />   4.1 25-30 mins</>,
-            more: 'Spanish: Paella Tapas Churros'
-        },
-        {
-            thumbnail: '/img/On Your Mind/5.jpg',
-            price: '40% off above Rs: 300', title: 'Coffe With Beans',
-            rating: <><TbStar className="bg-green-400 rounded-full text-white mt-1" />   4.1 25-30 mins</>,
-            more: 'Chines, Asians, Tibetan, Desserts Rohini'
-        },
-        {
-            thumbnail: '/img/On Your Mind/6.jpg',
-            price: '40% off above Rs: 300', title: 'Omlet Burger',
-            rating: <><TbStar className="bg-green-400 rounded-full text-white mt-1" />   4.1 25-30 mins</>,
-            more: 'Mexican, Tacos, Enchiladas, Desserts Rohini'
-        },
-        {
-            thumbnail: '/img/On Your Mind/15.jpg',
-            price: '40% off above Rs: 300',
-            title: 'Tikka Malai Botti',
-            rating: <><TbStar className="bg-green-400 rounded-full text-white mt-1" />   4.1 25-30 mins</>,
-            more: 'Japanese, Sushi, Ramen'
-        },
-        {
-            thumbnail: '/img/On Your Mind/10.jpg',
-            price: '40% off above Rs: 300',
-            title: 'Straberry Shake',
-            rating: <><TbStar className="bg-green-400 rounded-full text-white mt-1" />   4.1 25-30 mins</>,
-            more: 'Chines, Asians, Tibetan, Desserts Rohini'
-        },
-        {
-            thumbnail: '/img/On Your Mind/11.jpg',
-            price: '40% off above Rs: 300',
-            title: 'Veg & Non Veg',
-            rating: <><TbStar className="bg-green-400 rounded-full text-white mt-1" />   4.1 25-30 mins</>,
-            more: 'Chines, Asians, Tibetan, Desserts Rohini'
-        },
-        {
-            thumbnail: '/img/On Your Mind/16.jpg',
-            price: '40% off above Rs: 300',
-            title: 'Burger',
-            rating: <><TbStar className="bg-green-400 rounded-full text-white mt-1" />   4.1 25-30 mins</>,
-            more: 'Chines, Asians, Tibetan, Desserts Rohini'
-        },
-        {
-            thumbnail: '/img/On Your Mind/22.jpg',
-            price: '40% off above Rs: 300',
-            title: 'Burger',
-            rating: <><TbStar className="bg-green-400 rounded-full text-white mt-1" />   4.1 25-30 mins</>,
-            more: 'Chines, Asians, Tibetan, Desserts Rohini'
-        },
-        {
-            thumbnail: '/img/On Your Mind/26.jpeg',
-            price: '40% off above Rs: 300',
-            title: 'Burger',
-            rating: <><TbStar className="bg-green-400 rounded-full text-white mt-1" />   4.1 25-30 mins</>,
-            more: 'Chines, Asians, Tibetan, Desserts Rohini'
-        }
-    ]);
+  const slider = [
+    { title: "Daal", Thumbnail: "/img/daal.jpg" },
+    { title: "Rice", Thumbnail: "/img/rice.jpg" },
+    { title: "Pizza", Thumbnail: "/img/pizza.jpeg" },
+    { title: "Allo Bhujia", Thumbnail: "/img/allo-bhujia.jpg" },
+    { title: "Burger", Thumbnail: "/img/burger.jpeg" },
+    { title: "Chaomian", Thumbnail: "/img/chaomian.jpeg" },
+    { title: "Fish", Thumbnail: "/img/fish.jpeg" },
+    { title: "Mutton", Thumbnail: "/img/mutton.jpeg" },
+    { title: "Nodles", Thumbnail: "/img/nodles.jpeg" },
+    { title: "Pasta", Thumbnail: "/img/pasta.jpg" },
+    { title: "Salads", Thumbnail: "/img/salads.jpeg" },
+    { title: "Sweet", Thumbnail: "/img/sweet.jpeg" },
+    { title: "Tikka Boti", Thumbnail: "/img/tikka.jpg" },
+    { title: "Daleem Roti", Thumbnail: "/img/26.jpeg" },
+    { title: "Malai Boti", Thumbnail: "/img/15.jpg" },
 
+  ];
 
-    const canMoveNext = sliding + 3 < slider.length;
-    const canMovePrev = sliding > 0;
+  const itemsToMove = 3;
+  const itemWidth = 120; // px (image + gap approx)
 
+  const maxSlide = Math.max(0, slider.length - itemsToMove);
 
-    const nextClick = () => {
-        if (!canMoveNext) return;
-        setSliding(sliding + 3); // Move next by 3 items
-    };
+  const canMoveNext = sliding < maxSlide;
+  const canMovePrev = sliding > 0;
 
-    const prevClick = () => {
-        if (!canMovePrev) return;
-        setSliding(sliding - 3); // Move previous by 3 items
-    };
+  const nextClick = () => {
+    if (!canMoveNext) return;
+    setSliding((prev) => Math.min(prev + itemsToMove, maxSlide));
+  };
 
-    // // Move to the next slide (show 3 items)
-    // const nextClick = () => {
-    //     if (sliding + 3 >= slider.length)
-    //         return;
-    //     setSliding(sliding + 3); // Move next by 3 items
-    // };
+  const prevClick = () => {
+    if (!canMovePrev) return;
+    setSliding((prev) => Math.max(prev - itemsToMove, 0));
+  };
+return (
+    <div className="mx-auto max-w-[66rem] my-5">
+      {/* Header */}
+      <div className="flex justify-between items-center">
+        <div className="font-bold text-xl">What's on your mind?</div>
 
-    // // Move to the previous slide (show 3 items)
-    // const prevClick = () => {
-    //     if (sliding === 0) return;
-    //     setSliding(sliding - 3); // Move previous by 3 items
-    // };
+        <div className="flex">
+          <div
+            onClick={prevClick}
+            className={`w-8 h-8 rounded-full mx-1 flex items-center justify-center cursor-pointer ${
+              canMovePrev ? "bg-gray-400" : "bg-gray-200"
+            }`}
+          >
+            <FaArrowLeft />
+          </div>
 
-    // Check if we can move next or previous
+          <div
+            onClick={nextClick}
+            className={`w-8 h-8 rounded-full mx-1 flex items-center justify-center cursor-pointer
+                ${ canMoveNext ? "bg-gray-400" : "bg-gray-200"}`}>  <FaArrowRight />
+          </div>
+        </div>
+      </div>
 
-
-    return (
-        <div className="mx-auto max-w-[66rem] my-7">
-            <div className="flex justify-between">
-                <div className="font-bold text-xl ml-[.2rem]">
-                    Top restaurant chains in Delhi</div>
-                <div className="flex">
-                    <div
-                        onClick={prevClick}
-                        className={`w-8 h-8 rounded-full ${canMovePrev ? 'bg-gray-400' : 'bg-gray-200'} mx-1 flex items-center justify-center cursor-pointer`} >
-                        <FaArrowLeft />
-                    </div>
-
-                    <div
-                        onClick={nextClick}
-                        className={`w-8 h-8 rounded-full ${canMoveNext ? 'bg-gray-400' : 'bg-gray-200'} mx-1 flex items-center justify-center cursor-pointer`}>
-                        <FaArrowRight />
-                    </div>
-                </div>
+      {/* Slider */}
+      <div className="overflow-hidden my-4">
+        <div
+          className="flex gap-4 transition-transform duration-300"
+          style={{
+            transform: `translateX(-${sliding * itemWidth}px)`,
+          }}
+        >
+          {slider.map((item, index) => (
+            <div key={index} className="min-w-[100px] text-center">
+              <img
+                src={item.Thumbnail}
+                alt={item.title}
+                className="w-[80px] h-[80px] mx-auto rounded-full object-cover"
+              />
+              <div className="mt-2 font-medium text-sm">{item.title}</div>
             </div>
-
-
-            <div className="flex overflow-hidden gap-2 my-2">
-                {slider.slice(sliding, sliding + 15).map((item, index) => (
-                    <div
-                        style={{
-                            transform: `translateX(${sliding * -100}%)`,
-                            transition: "transform 0.3s ease",
-                        }}
-                        key={index} className="shrink-0">
-                        <TopRestourent {...item} />
-                    </div>
-                ))}
-            </div>
-
-
-            // Displaying the slider items
-
-
-
-        </div >
-    );
+          ))}
+        </div>
+      </div>
+    </div>
+  );
 };
 
 
